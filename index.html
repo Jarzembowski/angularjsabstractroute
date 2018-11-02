@@ -10,18 +10,23 @@
 
                 app.config(function($stateProvider, $urlRouterProvider) {
                      
-                        $urlRouterProvider.when("", "/main/teste2");
-                        $urlRouterProvider.when("/", "/main/teste2");
+                        // $urlRouterProvider.when("", "/main/teste2");
+                        // $urlRouterProvider.when("/", "/main/teste2");
                         
-                        // For any unmatched url, send to /route1
-                        $urlRouterProvider.otherwise("/main/teste2");
+                        // // For any unmatched url, send to /route1
+                        // $urlRouterProvider.otherwise("/main/teste2");
 
                     $stateProvider
                     .state("main", {
                         url: "/main",
                         abstract: true,
                         controller: "mainController",
-                        templateUrl : "main.html"                        
+                        templateUrl : "main.html",
+                        resolve: {
+                            initialData: function(newsControllerInitialData){
+                                return newsControllerInitialData();
+                            }
+                        }                      
                     })
                     .state("main.teste", {
                         url: "/teste",
@@ -39,10 +44,13 @@
 <script src="maincontroller.js"></script>
 <script src="testecontroller.js"></script>
 <script src="teste2controller.js"></script>
+<script src="resolver.js"></script>
+<script src="resolver2.js"></script>
+<script src="initialdata.js"></script>
 
 <body ng-app="myApp">
 
-        <div class="well" ui-view></div>       
+        <div class="main" ui-view></div>       
 
 <p><a ng-href="#!/main">Main</a></p>
 <p><a ng-href="#!/main/teste">teste</a></p>
